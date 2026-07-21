@@ -1,0 +1,33 @@
+spring:
+  application:
+    name: atlore-backend
+
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/atlore_dev?options=-c%20TimeZone%3DUTC}
+    username: ${DB_USERNAME:atlore}
+    password: ${DB_PASSWORD:change-me}
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+
+  flyway:
+    enabled: true
+
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+
+server:
+  port: 8080
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
