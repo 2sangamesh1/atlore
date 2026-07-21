@@ -1,69 +1,91 @@
 # Atlore
 
-Atlore is a learning-first production-style project for building a modern workspace platform with Java, Spring Boot, PostgreSQL, Redis, React, and TypeScript.
+Atlore is a workspace platform for knowledge management, project organization, and team collaboration. The goal is to bring documents, notes, tasks, and structured content into a single product with a clean information model and a scalable backend foundation.
 
-The goal is not to let AI build everything for you. The goal is to use AI like a strong pair programmer while you learn how real systems are designed, implemented, tested, reviewed, and improved.
+## Vision
 
-## What We Are Building
-
-Based on the product overview, Atlore is a unified workspace platform with:
+Atlore is being built as a modern web application with support for:
 
 - authentication and profile management
 - workspaces and member roles
-- pages with nested content
-- search, sharing, and notifications
-- future AI-assisted features
+- nested pages and structured content
+- search and organization workflows
+- sharing, permissions, and notifications
 
-## How We Should Work On This
+## Tech Stack
 
-Use this project to build engineering judgment, not just features.
+Current stack direction:
 
-- You should always know why a file exists, why a pattern was chosen, and what tradeoff it solves.
-- We should build in small slices and verify each slice with tests, logs, and manual checks.
-- We should prefer a modular monolith first, then split services only when there is a real reason.
-- Every feature should teach one or two production concepts such as validation, transactions, caching, authorization, or observability.
+- Backend: Java, Spring Boot, Spring Security, Spring Data JPA, Flyway
+- Database: PostgreSQL
+- Cache / infra support: Redis
+- Frontend: React, TypeScript, Tailwind CSS
+- Local infrastructure: Docker Compose
 
-## Current Repo State
+## Architecture Direction
 
-The repo already has local infrastructure for:
+The project starts as a modular monolith. That keeps the codebase easier to reason about while still allowing strong boundaries between domains such as auth, users, workspaces, and pages.
 
-- PostgreSQL
-- Redis
+## Current Status
 
-See `docker-compose.yml`.
+The repository currently includes:
 
-## Project Roadmap
+- backend bootstrap with Spring Boot
+- local PostgreSQL and Redis services via Docker Compose
+- base configuration for Flyway, JPA, Redis, and Actuator
+- initial schema migration wiring
+
+## Repository Structure
+
+```text
+atlore/
+  backend/
+  docs/
+  docker-compose.yml
+  README.md
+```
+
+## Local Development
+
+### Prerequisites
+
+- Java 21
+- Maven
+- Docker Desktop
+
+### Start Infrastructure
+
+From the repository root:
+
+```powershell
+docker compose up -d
+```
+
+### Start Backend
+
+From `backend/`:
+
+```powershell
+mvn spring-boot:run
+```
+
+### Health Check
+
+```text
+http://localhost:8080/actuator/health
+```
+
+## Roadmap
+
+Project planning and milestone notes live in:
 
 - [Engineering Roadmap](docs/engineering-roadmap.md)
 - [Backend v0.1 Plan](docs/backend-v0.1.md)
 
-## Learning Rules For AI Pairing
+## Near-Term Goals
 
-- Ask for explanations whenever something feels magical.
-- Do not merge or keep code you cannot explain back in your own words.
-- After each feature, write down:
-  - what problem it solves
-  - why this design was chosen
-  - what could go wrong in production
-  - how you would test it
-- Prefer building one vertical slice end to end over generating a huge codebase all at once.
-
-## Recommended Build Order
-
-1. Set up Git, backend skeleton, and local developer workflow.
-2. Build authentication with proper validation, password hashing, JWT, and refresh tokens.
-3. Build workspace and membership management with role checks.
-4. Build basic page creation and retrieval with audit fields and soft delete/archive behavior.
-5. Add tests, structured error handling, logging, and API documentation as first-class work.
-
-## What "Job Ready" Looks Like Here
-
-By the time we finish the early milestones, you should be able to:
-
-- explain Spring Boot project structure confidently
-- design entities and relationships before coding
-- create REST APIs with validation and consistent responses
-- reason about authentication and authorization boundaries
-- debug failures using logs, tests, and database inspection
-- talk through tradeoffs in interviews instead of only showing code
-
+- establish a clean backend foundation
+- implement authentication and user management
+- add workspace and membership flows
+- build the first page lifecycle endpoints
+- introduce repeatable tests and stronger production defaults
